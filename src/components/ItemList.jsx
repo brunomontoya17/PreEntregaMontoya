@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { getProducts, getProductByID, getProductByCategory } from '../misc/asyncmock';
+//import { getProducts, getProductByID, getProductByCategory } from '../misc/asyncmock';
 import Item from './Item';
+
+import { getProducts, getProductsByCategory } from '../misc/firebase';
 
 function ItemList({ id }) {
 
@@ -9,9 +11,9 @@ function ItemList({ id }) {
   useEffect( () => {
     console.log(id);
     if (id==0)
-      setItemList(getProducts());
+      getProducts().then((data) => setItemList(data))
     else
-      setItemList(getProductByCategory(id));
+      getProductsByCategory(id).then((data) => setItemList(data));
   },[id])
 
   return (

@@ -5,18 +5,20 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import CartWidget from './CartWidget';
 import { Link } from 'react-router-dom';
-import { getCategories } from '../misc/asyncmock';
+//import { getCategories } from '../misc/asyncmock';
+import { getCategories } from '../misc/firebase';
 
 const NavBar = () => {
 
     const [categories, setCategories] = useState([]);
     
     useEffect(() => {
-        getCategories.then((data) => {
+        getCategories().then((data) => {
             setCategories(data);
             console.table(data);
         })
     },[]);
+
   return (
     <div>
         <Navbar>
@@ -26,7 +28,7 @@ const NavBar = () => {
                     <NavDropdown title='Categorias'>
                         {
                             categories.map((cat) => {
-                                return <NavDropdown.Item key={cat.id} as={Link} to={`/category/${cat.id}`} >{cat.name}</NavDropdown.Item>
+                                return <NavDropdown.Item key={cat.id} as={Link} to={`/category/${cat.id_category}`} >{cat.name}</NavDropdown.Item>
                             })
                         }
                     </NavDropdown>
